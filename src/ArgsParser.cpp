@@ -1,12 +1,11 @@
-#include "ArgsParser.h"
+#include "../ArgsParser.h"
 #include <iostream>
+#include <CLI/CLI.hpp>
 
 ArgsParser::Result ArgsParser::parse(int argc,
                                      char *argv[]) { // parse arguments
-    if (argc == 1)
-        return Result::noArgs;
+    CLI::App app {"Sound processor"};
 
-    return Result::ok;
 }
 
 void ArgsParser::help() { // help command

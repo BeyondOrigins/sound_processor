@@ -13,10 +13,7 @@ public:
     struct FilterDescriptor {
         const char* filterName;
         std::vector<char*> args;
-
-        FilterDescriptor(const char* filterName, const std::vector<char*>& args) :
-            filterName(filterName), args(args) {}
-
+        FilterDescriptor(const char* name, std::vector<char*>&& args) : filterName(name), args(std::move(args)) {}
     };
 
     ArgsParser() : _inputFileName(nullptr), _outputFileName(nullptr) {}
@@ -25,8 +22,9 @@ public:
     Result parse(int argc, char *argv[]);
     static void help();
 public:
-    [[nodiscard]] char* getInFileName() const { return _inputFileName; }
-    [[nodiscard]] char* getOutFileName() const { return _outputFileName; }
+    [[nodiscard]] const char* getInFileName() const { return _inputFileName; }
+    [[nodiscard]] const char* getOutFileName() const { return _outputFileName; }
+    [[nodiscard]] const std::vector<FilterDescriptor>& getFilters() const { return _filters; }
 private:
     char* _inputFileName;
     char* _outputFileName;
