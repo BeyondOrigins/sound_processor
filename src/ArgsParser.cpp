@@ -1,4 +1,4 @@
-#include "../ArgsParser.h"
+#include "ArgsParser.h"
 #include <iostream>
 #include <CLI/CLI.hpp>
 
