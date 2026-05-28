@@ -14,22 +14,29 @@ class Waveform
         uint16_t wBitsPerSample = 16;
         uint32_t dwDataSize;
     };
+
 public:
     Waveform() = default;
-    Waveform(const Waveform& other) : _dataInfo(other._dataInfo), _data(other._data) {}
+    Waveform(const Waveform& other)
+        : _dataInfo(other._dataInfo), _data(other._data)
+    {
+    }
     Waveform& operator=(const Waveform& other)
     {
-        if (&other != this)
+        if(&other != this)
         {
             _data = other._data;
             _dataInfo = other._dataInfo;
         }
         return *this;
     }
-    Waveform(Waveform&& other) noexcept : _dataInfo(std::move(other._dataInfo)), _data(std::move(other._data)) {}
+    Waveform(Waveform&& other) noexcept
+        : _dataInfo(std::move(other._dataInfo)), _data(std::move(other._data))
+    {
+    }
     Waveform& operator=(Waveform&& other) noexcept
     {
-        if (&other != this)
+        if(&other != this)
         {
             _dataInfo = std::move(other._dataInfo);
             _data = std::move(other._data);
@@ -37,9 +44,11 @@ public:
         return *this;
     }
     ~Waveform() = default;
+
 public:
     const std::vector<int16_t>& getData() const { return _data; }
     const DataInfo& getDataInfo() const { return _dataInfo; }
+
 private:
     std::vector<int16_t> _data;
     DataInfo _dataInfo;

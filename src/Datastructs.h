@@ -27,4 +27,4 @@ struct __attribute__((packed)) DataHeader
     uint32_t size;
 };
 
-#endif //SOUND_PROCESSOR_DATASTRUCTS_H
+#endif  // SOUND_PROCESSOR_DATASTRUCTS_H
