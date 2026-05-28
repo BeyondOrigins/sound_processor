@@ -1,0 +1,11 @@
+#ifndef SOUND_PROCESSOR_WAVSTREAM_H
+#define SOUND_PROCESSOR_WAVSTREAM_H
+
+
+class WavStream
+{
+
+};
+
+
+#endif //SOUND_PROCESSOR_WAVSTREAM_H

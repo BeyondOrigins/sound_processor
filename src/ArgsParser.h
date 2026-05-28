@@ -17,12 +17,12 @@ public:
 
         explicit FilterDescriptor(const std::string& filterString)
         {
-            std::stringstream ss(filterString);
+            std::stringstream stream(filterString);
             std::string tmp;
-            ss >> filterName;
-            while (!ss.eof())
+            stream >> filterName;
+            while (!stream.eof())
             {
-                ss >> tmp;
+                stream >> tmp;
                 args.push_back(tmp);
             }
         }
