@@ -1,6 +1,7 @@
 #ifndef PROJECT_ARGSPARSER_H
 #define PROJECT_ARGSPARSER_H
 #include <vector>
+#include <sstream>
 
 class ArgsParser {
 public:
@@ -16,7 +17,14 @@ public:
 
         explicit FilterDescriptor(const std::string& filterString)
         {
-            // implement the string decomposition
+            std::stringstream ss(filterString);
+            std::string tmp;
+            ss >> filterName;
+            while (!ss.eof())
+            {
+                ss >> tmp;
+                args.push_back(tmp);
+            }
         }
     };
 

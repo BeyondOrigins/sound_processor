@@ -13,23 +13,29 @@ ArgsParser::Result ArgsParser::parse(int argc,
     app.add_option("-i", inputFileName, "Input file");
     app.add_option("-o", outputFileName, "Output file");
     app.add_option("-f", filtersStrings, "Add filter");
-    try {
+    try
+    {
         app.parse(argc, argv);
     }
-    catch (const std::exception &_) {
+    catch (const std::exception &_)
+    {
         return Result::badArgs;
     }
     _inputFileName = inputFileName;
     _outputFileName = outputFileName;
     _filters = std::vector<FilterDescriptor>();
-    for (auto &filterString : filtersStrings) {
+    for (auto &filterString : filtersStrings)
+    {
+        if (filterString.empty())
+            return Result::badArgs;
         FilterDescriptor desc(filterString);
         _filters.push_back(desc);
     }
     return Result::ok;
 }
 
-void ArgsParser::help() { // help command
+void ArgsParser::help()
+{ // help command
     std::cout << "Command format:" << std::endl;
     std::cout << "{command} [-i path_to_input_file] [-o path_to_output_file]" << std::endl;
     std::cout << "[-f {filter_name1} [filter1_param1] [filter1_param2]...]" << std::endl;
