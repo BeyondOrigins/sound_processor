@@ -11,23 +11,27 @@ public:
     };
 
     struct FilterDescriptor {
-        const char* filterName;
-        std::vector<char*> args;
-        FilterDescriptor(const char* name, std::vector<char*>&& args) : filterName(name), args(std::move(args)) {}
+        std::string filterName;
+        std::vector<std::string> args;
+
+        explicit FilterDescriptor(const std::string& filterString)
+        {
+            // implement the string decomposition
+        }
     };
 
-    ArgsParser() : _inputFileName(nullptr), _outputFileName(nullptr) {}
+    ArgsParser() = default;
 
 public:
     Result parse(int argc, char *argv[]);
     static void help();
 public:
-    [[nodiscard]] const char* getInFileName() const { return _inputFileName; }
-    [[nodiscard]] const char* getOutFileName() const { return _outputFileName; }
+    [[nodiscard]] const std::string& getInFileName() const { return _inputFileName; }
+    [[nodiscard]] const std::string& getOutFileName() const { return _outputFileName; }
     [[nodiscard]] const std::vector<FilterDescriptor>& getFilters() const { return _filters; }
 private:
-    char* _inputFileName;
-    char* _outputFileName;
+    std::string _inputFileName;
+    std::string _outputFileName;
     std::vector<FilterDescriptor> _filters;
 };
 
