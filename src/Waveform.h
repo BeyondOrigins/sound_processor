@@ -43,11 +43,17 @@ public:
         }
         return *this;
     }
+    Waveform(const DataInfo& dataInfo, std::vector<int16_t>& data)
+        : _dataInfo(std::move(dataInfo)), _data(std::move(data))
+    {
+    }
     ~Waveform() = default;
 
 public:
     const std::vector<int16_t>& getData() const { return _data; }
     const DataInfo& getDataInfo() const { return _dataInfo; }
+
+    // TODO: develop methods for interacting with data
 
 private:
     std::vector<int16_t> _data;
