@@ -1,21 +1,24 @@
 #ifndef SOUND_PROCESSOR_WAVISTREAM_H
 #define SOUND_PROCESSOR_WAVISTREAM_H
-#include <istream>
+#include "WavBaseStream.h"
 
+class Waveform;
 
-class WavIStream
+// class for reading data from WAV file
+class WavIStream: public WavBaseStream
 {
 public:
-    WavIStream() = default;
-    WavIStream(const WavIStream &) = delete;
-    WavIStream &operator=(const WavIStream &) = delete;
-    WavIStream(WavIStream &&) = default;
-    WavIStream &operator=(WavIStream &&) = default;
-    WavIStream(std::istream &stream) : _stream(&stream) {}
-    ~WavIStream() = default;
-private:
-    std::istream* _stream;
+    explicit WavIStream(const std::string& fileName)
+    {
+        _stream.exceptions(std::ios::failbit | std::ios::badbit);
+        _stream.open(fileName, std::ios::binary | std::ios::in);
+        _stream.read(reinterpret_cast<char*>(&_info.riff), sizeof(RiffHeader));
+        _stream.read(reinterpret_cast<char*>(&_info.fmt), sizeof(FmtHeader));
+        _stream.read(reinterpret_cast<char*>(&_info.data), sizeof(DataHeader));
+    }
+
+public:
+    friend WavIStream& operator>>(WavIStream& stream, Waveform& data);
 };
 
-
-#endif //SOUND_PROCESSOR_WAVISTREAM_H
+#endif  // SOUND_PROCESSOR_WAVISTREAM_H

@@ -19,5 +19,9 @@ add_executable(sound_processor main.cpp
         src/Datastructs.h
         src/WavIStream.cpp
         src/WavIStream.h
+        src/WavBaseStream.cpp
+        src/WavBaseStream.h
+        src/WavOStream.cpp
+        src/WavOStream.h
 )
 target_link_libraries(sound_processor PRIVATE CLI11::CLI11)

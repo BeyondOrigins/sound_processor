@@ -1,24 +1,18 @@
 #ifndef SOUND_PROCESSOR_WAVEFORM_H
 #define SOUND_PROCESSOR_WAVEFORM_H
 #include <vector>
+#include "Datastructs.h"
+
+class WavIStream;
+class WavOStream;
 
 class Waveform
 {
-    struct __attribute__((packed)) DataInfo
-    {
-        uint16_t wFormatTag = 1;
-        uint16_t wChannels = 1;
-        uint32_t dwSamplesPerSec = 44100;
-        uint32_t dwAvgBytesPerSec;
-        uint16_t wBlockAlign = 2;
-        uint16_t wBitsPerSample = 16;
-        uint32_t dwDataSize;
-    };
 
 public:
     Waveform() = default;
     Waveform(const Waveform& other)
-        : _dataInfo(other._dataInfo), _data(other._data)
+        : _info(other._info), _data(other._data)
     {
     }
     Waveform& operator=(const Waveform& other)
@@ -26,38 +20,42 @@ public:
         if(&other != this)
         {
             _data = other._data;
-            _dataInfo = other._dataInfo;
+            _info = other._info;
         }
         return *this;
     }
     Waveform(Waveform&& other) noexcept
-        : _dataInfo(std::move(other._dataInfo)), _data(std::move(other._data))
+        : _info(std::move(other._info)), _data(std::move(other._data))
     {
     }
     Waveform& operator=(Waveform&& other) noexcept
     {
         if(&other != this)
         {
-            _dataInfo = std::move(other._dataInfo);
+            _info = std::move(other._info);
             _data = std::move(other._data);
         }
         return *this;
     }
-    Waveform(const DataInfo& dataInfo, std::vector<int16_t>& data)
-        : _dataInfo(std::move(dataInfo)), _data(std::move(data))
+    Waveform(const WavInfo& dataInfo, std::vector<int16_t>& data)
+        : _info(std::move(dataInfo)), _data(std::move(data))
     {
     }
     ~Waveform() = default;
 
+    friend WavIStream& operator>>(WavIStream& stream, Waveform& data);
+    friend WavOStream& operator<<(WavOStream& stream, const Waveform& data);
+
 public:
     const std::vector<int16_t>& getData() const { return _data; }
-    const DataInfo& getDataInfo() const { return _dataInfo; }
+    const WavInfo& getDataInfo() const { return _info; }
 
     // TODO: develop methods for interacting with data
+    // probably need to create a member defining whether the object stores data
 
 private:
     std::vector<int16_t> _data;
-    DataInfo _dataInfo;
+    WavInfo _info;
 };
 
 #endif  // SOUND_PROCESSOR_WAVEFORM_H
