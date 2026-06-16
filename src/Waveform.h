@@ -50,6 +50,7 @@ public:
     std::vector<int16_t>& getData() { return _data; }
     size_t getDataSize() const { return _data.size(); }
     const WavInfo& getDataInfo() const { return _info; }
+    void syncHeader();
 
 private:
     std::vector<int16_t> _data;

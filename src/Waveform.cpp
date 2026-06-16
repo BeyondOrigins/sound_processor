@@ -22,3 +22,10 @@ WavOStream& operator<<(WavOStream& stream, const Waveform& data)
                          data._info.data.size);
     return stream;
 }
+
+void Waveform::syncHeader()
+{
+    size_t dataSize = _data.size()*sizeof(int16_t);
+    _info.data.size = dataSize;
+    _info.riff.size = dataSize + 36;
+}

@@ -10,7 +10,7 @@
 class AmplFilter: public IFilter
 {
 public:
-    AmplFilter() = default;
+    AmplFilter() = delete;
     AmplFilter(const AmplFilter&) = default;
     AmplFilter& operator=(const AmplFilter&) = default;
     AmplFilter(AmplFilter&&) = default;
@@ -56,7 +56,7 @@ protected:
 class SilenceFilter: public IFilter
 {
 public:
-    SilenceFilter(): _unit("ms"), _start(0.0), _end(0.0) {}
+    SilenceFilter() = delete;
     SilenceFilter(const SilenceFilter&) = default;
     SilenceFilter& operator=(const SilenceFilter&) = default;
     SilenceFilter(SilenceFilter&&) = default;
@@ -86,7 +86,7 @@ protected:
 class TimeStretchFilter : public IFilter
 {
     public:
-    TimeStretchFilter() = default;
+    TimeStretchFilter() = delete;
     TimeStretchFilter(const TimeStretchFilter&) = default;
     TimeStretchFilter& operator=(const TimeStretchFilter&) = default;
     TimeStretchFilter(TimeStretchFilter&&) = default;
@@ -108,7 +108,7 @@ protected:
 class LowpassFilter : public IFilter
 {
 public:
-    LowpassFilter() = default;
+    LowpassFilter() = delete;
     LowpassFilter(const LowpassFilter&) = default;
     LowpassFilter& operator=(const LowpassFilter&) = default;
     LowpassFilter(LowpassFilter&&) = default;

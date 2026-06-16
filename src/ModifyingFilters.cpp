@@ -67,6 +67,7 @@ bool SilenceFilter::apply(Waveform* sound)
     size_t silenceUnits = endUnits - startUnits;
     sound->getData().insert(sound->getData().begin() + startUnits, silenceUnits,
                             0);
+    sound->syncHeader();
     return true;
 }
 
@@ -92,6 +93,7 @@ bool TimeStretchFilter::apply(Waveform* sound)
     }
     if (newDataSize < size)
         data.resize(newDataSize);
+    sound->syncHeader();
     return true;
 }
 
