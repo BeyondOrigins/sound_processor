@@ -12,15 +12,16 @@ public:
     }
     WavBaseStream(const WavBaseStream&) = delete;
     WavBaseStream& operator=(const WavBaseStream&) = delete;
-    WavBaseStream(WavBaseStream&&) = default;
-    WavBaseStream& operator=(WavBaseStream&&) = default;
+    WavBaseStream(WavBaseStream&&) = delete;
+    WavBaseStream& operator=(WavBaseStream&&) = delete;
+protected:
     ~WavBaseStream() = default;
 
 public:
     bool operator!() const { return !_stream; }
     bool isOpen() const { return _stream.is_open(); }
     void close();
-    void open(const std::string& fileName);
+    virtual void open(const std::string& fileName) = 0;
 
 protected:
     WavInfo _info;

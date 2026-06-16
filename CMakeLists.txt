@@ -23,5 +23,14 @@ add_executable(sound_processor main.cpp
         src/WavBaseStream.h
         src/WavOStream.cpp
         src/WavOStream.h
+        src/IFilter.h
+        src/Pipeline.cpp
+        src/Pipeline.h
+        src/CmdLineArgs2PipelineConverter.cpp
+        src/CmdLineArgs2PipelineConverter.h
+        src/ModifyingFilters.cpp
+        src/ModifyingFilters.h
+        src/GeneratorFilters.cpp
+        src/GeneratorFilters.h
 )
 target_link_libraries(sound_processor PRIVATE CLI11::CLI11)

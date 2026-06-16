@@ -47,11 +47,9 @@ public:
     friend WavOStream& operator<<(WavOStream& stream, const Waveform& data);
 
 public:
-    const std::vector<int16_t>& getData() const { return _data; }
+    std::vector<int16_t>& getData() { return _data; }
+    size_t getDataSize() const { return _data.size(); }
     const WavInfo& getDataInfo() const { return _info; }
-
-    // TODO: develop methods for interacting with data
-    // probably need to create a member defining whether the object stores data
 
 private:
     std::vector<int16_t> _data;

@@ -15,6 +15,7 @@ public:
     }
 
 public:
+    void open(const std::string& fileName) override;
     friend WavOStream& operator<<(WavOStream& stream, const Waveform& data);
 };
 
