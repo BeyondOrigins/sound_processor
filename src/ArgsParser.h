@@ -1,6 +1,7 @@
 #ifndef PROJECT_ARGSPARSER_H
 #define PROJECT_ARGSPARSER_H
 #include <sstream>
+#include <string>
 #include <vector>
 
 class ArgsParser
@@ -18,16 +19,20 @@ public:
         std::string filterName;
         std::vector<std::string> args;
 
+        FilterDescriptor() = default;
+
+        FilterDescriptor(std::string name, std::vector<std::string> arguments)
+            : filterName(std::move(name)), args(std::move(arguments))
+        {
+        }
+
         explicit FilterDescriptor(const std::string& filterString)
         {
-            std::stringstream stream(filterString);
-            std::string tmp;
+            std::istringstream stream(filterString);
             stream >> filterName;
-            while(!stream.eof())
-            {
-                stream >> tmp;
+            std::string tmp;
+            while(stream >> tmp)
                 args.push_back(tmp);
-            }
         }
     };
 

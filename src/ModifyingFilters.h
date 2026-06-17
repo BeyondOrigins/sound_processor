@@ -114,6 +114,7 @@ public:
     LowpassFilter(LowpassFilter&&) = default;
     LowpassFilter& operator=(LowpassFilter&&) = default;
     ~LowpassFilter() override = default;
+    LowpassFilter(size_t windowSize) : _windowSize{windowSize} {}
 public:
     bool apply(Waveform* sound) override;
     size_t getWindowSize() const { return _windowSize; }

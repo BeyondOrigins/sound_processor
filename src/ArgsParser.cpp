@@ -1,35 +1,53 @@
 #include "ArgsParser.h"
-#include <CLI/CLI.hpp>
 #include <iostream>
+#include <string>
+
+namespace
+{
+    constexpr std::string FLAGS[]= {"-i", "-o", "-f"};
+    bool isFlag(const std::string& token)
+    {
+        return std::ranges::find(FLAGS, std::string_view(token)) !=
+               std::end(FLAGS);
+    }
+}  // namespace
 
 ArgsParser::Result ArgsParser::parse(int argc, char* argv[])
-{  // parse arguments
+{
     if(argc == 1)
         return Result::noArgs;
-    CLI::App app{"Sound processor"};
-    std::string inputFileName;
-    std::string outputFileName;
-    std::vector<std::string> filtersStrings;
-    app.add_option("-i", inputFileName, "Input file");
-    app.add_option("-o", outputFileName, "Output file");
-    app.add_option("-f", filtersStrings, "Add filter");
-    try
+
+    _inputFileName.clear();
+    _outputFileName.clear();
+    _filters.clear();
+
+    for(int i = 1; i < argc; ++i)
     {
-        app.parse(argc, argv);
-    }
-    catch(const std::exception& _)
-    {
-        return Result::badArgs;
-    }
-    _inputFileName = inputFileName;
-    _outputFileName = outputFileName;
-    _filters = std::vector<FilterDescriptor>();
-    for(auto& filterString: filtersStrings)
-    {
-        if(filterString.empty())
+        const std::string ARG = argv[i];
+
+        if(ARG == "-i")
+        {
+            if(++i >= argc) return Result::badArgs;
+            _inputFileName = argv[i];
+        }
+        else if(ARG == "-o")
+        {
+            if(++i >= argc) return Result::badArgs;
+            _outputFileName = argv[i];
+        }
+        else if(ARG == "-f")
+        {
+            if(++i >= argc) return Result::badArgs;
+            std::string name = argv[i];
+            std::vector<std::string> filterArgs;
+            while(i + 1 < argc && !isFlag(argv[i + 1]))
+                filterArgs.push_back(argv[++i]);
+            _filters.emplace_back(std::move(name), std::move(filterArgs));
+        }
+        else
+        {
             return Result::badArgs;
-        FilterDescriptor desc(filterString);
-        _filters.push_back(desc);
+        }
     }
     return Result::ok;
 }

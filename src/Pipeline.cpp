@@ -2,10 +2,7 @@
 
 #include "Waveform.h"
 
-#include <iostream>
-#include <ostream>
-
-bool Pipeline::apply(Waveform* data)
+bool Pipeline::apply(Waveform* data) const
 {
     for (IFilter* filter : _filters)
     {
