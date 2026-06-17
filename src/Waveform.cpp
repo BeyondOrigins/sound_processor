@@ -21,8 +21,9 @@ WavOStream& operator<<(WavOStream& stream, const Waveform& data)
         throw std::ios_base::failure("Stream is closed");
     stream._stream.write(reinterpret_cast<const char*>(&data._info),
                          sizeof(WavInfo));
-    stream._stream.write(reinterpret_cast<const char*>(&data._data),
-                         data._info.data.size);
+    if (!data._data.empty())
+        stream._stream.write(reinterpret_cast<const char*>(data._data.data()),
+            static_cast<std::streamsize>(data._data.size() * sizeof(int16_t)));
     return stream;
 }
 

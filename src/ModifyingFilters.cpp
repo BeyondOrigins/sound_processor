@@ -2,6 +2,9 @@
 #include "Waveform.h"
 #include <limits>
 #include <numeric>
+#include <algorithm>
+#include <cmath>
+#include <cstdlib>
 
 double samplesToMilliseconds(const WavInfo& info, size_t samples)
 {
@@ -106,7 +109,7 @@ bool LowpassFilter::apply(Waveform* sound)
     for (size_t i = 0; i < size; ++i)
     {
         int32_t sum = 0;
-        for (int j = static_cast<int>(i) - static_cast<int>(bias); j <= i + bias
+        for (int j = static_cast<int>(i) - static_cast<int>(bias); j <= static_cast<int>(i + bias)
              ; ++j)
         {
             int idx = std::clamp(j, 0, static_cast<int>(size) - 1);

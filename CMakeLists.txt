@@ -1,40 +1,39 @@
-cmake_minimum_required(VERSION 4.0)
-project(sound_processor)
+cmake_minimum_required(VERSION 3.20)
+project(sound_processor CXX)
 
 set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+add_library(sound_processor_lib STATIC
+        src/ArgsParser.cpp
+        src/Waveform.cpp
+        src/WavIStream.cpp
+        src/WavBaseStream.cpp
+        src/WavOStream.cpp
+        src/Pipeline.cpp
+        src/CmdLineArgs2PipelineConverter.cpp
+        src/ModifyingFilters.cpp
+        src/GeneratorFilters.cpp
+        src/FilterProducers.cpp
+        src/Application.cpp
+)
+target_include_directories(sound_processor_lib PUBLIC src)
+
+add_executable(sound_processor main.cpp)
+target_link_libraries(sound_processor PRIVATE sound_processor_lib)
 
 include(FetchContent)
 FetchContent_Declare(
-        CLI11
-        GIT_REPOSITORY https://github.com/CLIUtils/CLI11.git
-        GIT_TAG        v2.4.2
+        Catch2
+        GIT_REPOSITORY https://github.com/catchorg/Catch2.git
+        GIT_TAG        v3.5.4
 )
-FetchContent_MakeAvailable(CLI11)
+FetchContent_MakeAvailable(Catch2)
 
-add_executable(sound_processor main.cpp
-        src/ArgsParser.cpp
-        src/ArgsParser.h
-        src/Waveform.cpp
-        src/Waveform.h
-        src/Datastructs.h
-        src/WavIStream.cpp
-        src/WavIStream.h
-        src/WavBaseStream.cpp
-        src/WavBaseStream.h
-        src/WavOStream.cpp
-        src/WavOStream.h
-        src/IFilter.h
-        src/Pipeline.cpp
-        src/Pipeline.h
-        src/CmdLineArgs2PipelineConverter.cpp
-        src/CmdLineArgs2PipelineConverter.h
-        src/ModifyingFilters.cpp
-        src/ModifyingFilters.h
-        src/GeneratorFilters.cpp
-        src/GeneratorFilters.h
-        src/FilterProducers.cpp
-        src/FilterProducers.h
-        src/Application.cpp
-        src/Application.h
-)
-target_link_libraries(sound_processor PRIVATE CLI11::CLI11)
+add_executable(sound_processor_tests tests/sound_processor_tests.cpp)
+target_link_libraries(sound_processor_tests PRIVATE sound_processor_lib Catch2::Catch2WithMain)
+
+enable_testing()
+list(APPEND CMAKE_MODULE_PATH ${catch2_SOURCE_DIR}/extras)
+include(Catch)
+catch_discover_tests(sound_processor_tests)
