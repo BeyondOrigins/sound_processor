@@ -37,7 +37,7 @@ public:
         }
         return *this;
     }
-    Waveform(const WavInfo& dataInfo, std::vector<int16_t>& data)
+    Waveform(const WavInfo& dataInfo, std::vector<int16_t> data)
         : _info(std::move(dataInfo)), _data(std::move(data))
     {
     }

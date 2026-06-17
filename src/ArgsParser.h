@@ -4,6 +4,28 @@
 #include <string>
 #include <vector>
 
+struct FilterDescriptor
+{
+    std::string filterName;
+    std::vector<std::string> args;
+
+    FilterDescriptor() = default;
+
+    FilterDescriptor(std::string name, std::vector<std::string> arguments)
+        : filterName(std::move(name)), args(std::move(arguments))
+    {
+    }
+
+    explicit FilterDescriptor(const std::string& filterString)
+    {
+        std::istringstream stream(filterString);
+        stream >> filterName;
+        std::string tmp;
+        while(stream >> tmp)
+            args.push_back(tmp);
+    }
+};
+
 class ArgsParser
 {
 public:
@@ -14,27 +36,7 @@ public:
         badArgs,
     };
 
-    struct FilterDescriptor
-    {
-        std::string filterName;
-        std::vector<std::string> args;
 
-        FilterDescriptor() = default;
-
-        FilterDescriptor(std::string name, std::vector<std::string> arguments)
-            : filterName(std::move(name)), args(std::move(arguments))
-        {
-        }
-
-        explicit FilterDescriptor(const std::string& filterString)
-        {
-            std::istringstream stream(filterString);
-            stream >> filterName;
-            std::string tmp;
-            while(stream >> tmp)
-                args.push_back(tmp);
-        }
-    };
 
     ArgsParser() = default;
 

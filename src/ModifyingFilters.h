@@ -92,7 +92,7 @@ class TimeStretchFilter : public IFilter
     TimeStretchFilter(TimeStretchFilter&&) = default;
     TimeStretchFilter& operator=(TimeStretchFilter&&) = default;
     ~TimeStretchFilter() override = default;
-    TimeStretchFilter(double factor) : _factor{factor} {}
+    explicit TimeStretchFilter(double factor) : _factor{factor} {}
 
 public:
     bool apply(Waveform* sound) override;
@@ -114,7 +114,7 @@ public:
     LowpassFilter(LowpassFilter&&) = default;
     LowpassFilter& operator=(LowpassFilter&&) = default;
     ~LowpassFilter() override = default;
-    LowpassFilter(size_t windowSize) : _windowSize{windowSize} {}
+    explicit LowpassFilter(size_t windowSize) : _windowSize{windowSize} {}
 public:
     bool apply(Waveform* sound) override;
     size_t getWindowSize() const { return _windowSize; }

@@ -32,5 +32,9 @@ add_executable(sound_processor main.cpp
         src/ModifyingFilters.h
         src/GeneratorFilters.cpp
         src/GeneratorFilters.h
+        src/FilterProducers.cpp
+        src/FilterProducers.h
+        src/Application.cpp
+        src/Application.h
 )
 target_link_libraries(sound_processor PRIVATE CLI11::CLI11)
