@@ -14,10 +14,11 @@ public:
     CmdLineArgs2PipelineConverter() = default;
 
 public:
-    void addFilterProducer(const std::string& filterName, FilterProducer producer);
+    void addFilterProducer(const std::string& filterName,
+                           FilterProducer producer);
     FilterProducer getFilterProducer(const std::string& filterName) const;
-    Pipeline createPipeline(
-        const std::vector<FilterDescriptor>& descriptors) const;
+    Pipeline
+    createPipeline(const std::vector<FilterDescriptor>& descriptors) const;
 
 private:
     std::map<std::string, FilterProducer> _producers;

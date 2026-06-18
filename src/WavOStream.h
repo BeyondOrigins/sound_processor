@@ -19,5 +19,4 @@ public:
     friend WavOStream& operator<<(WavOStream& stream, const Waveform& data);
 };
 
-
-#endif //SOUND_PROCESSOR_WAVOSTREAM_H
+#endif  // SOUND_PROCESSOR_WAVOSTREAM_H

@@ -1,7 +1,7 @@
 #ifndef SOUND_PROCESSOR_WAVEFORM_H
 #define SOUND_PROCESSOR_WAVEFORM_H
-#include <vector>
 #include "Datastructs.h"
+#include <vector>
 
 class WavIStream;
 class WavOStream;
@@ -11,10 +11,7 @@ class Waveform
 
 public:
     Waveform() = default;
-    Waveform(const Waveform& other)
-        : _info(other._info), _data(other._data)
-    {
-    }
+    Waveform(const Waveform& other): _info(other._info), _data(other._data) {}
     Waveform& operator=(const Waveform& other)
     {
         if(&other != this)

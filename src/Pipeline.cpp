@@ -4,10 +4,10 @@
 
 bool Pipeline::apply(Waveform* data) const
 {
-    for (IFilter* filter : _filters)
+    for(IFilter* filter: _filters)
     {
         bool result = filter->apply(data);
-        if (!result)
+        if(!result)
             filter->failMessage();
     }
     return true;

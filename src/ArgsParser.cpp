@@ -2,14 +2,12 @@
 #include <iostream>
 #include <string>
 
-namespace
+namespace {
+constexpr std::string FLAGS[] = {"-i", "-o", "-f"};
+bool isFlag(const std::string& token)
 {
-    constexpr std::string FLAGS[]= {"-i", "-o", "-f"};
-    bool isFlag(const std::string& token)
-    {
-        return std::ranges::find(FLAGS, std::string_view(token)) !=
-               std::end(FLAGS);
-    }
+    return std::ranges::find(FLAGS, std::string_view(token)) != std::end(FLAGS);
+}
 }  // namespace
 
 ArgsParser::Result ArgsParser::parse(int argc, char* argv[])
@@ -27,17 +25,20 @@ ArgsParser::Result ArgsParser::parse(int argc, char* argv[])
 
         if(ARG == "-i")
         {
-            if(++i >= argc) return Result::badArgs;
+            if(++i >= argc)
+                return Result::badArgs;
             _inputFileName = argv[i];
         }
         else if(ARG == "-o")
         {
-            if(++i >= argc) return Result::badArgs;
+            if(++i >= argc)
+                return Result::badArgs;
             _outputFileName = argv[i];
         }
         else if(ARG == "-f")
         {
-            if(++i >= argc) return Result::badArgs;
+            if(++i >= argc)
+                return Result::badArgs;
             std::string name = argv[i];
             std::vector<std::string> filterArgs;
             while(i + 1 < argc && !isFlag(argv[i + 1]))

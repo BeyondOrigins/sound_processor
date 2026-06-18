@@ -4,12 +4,12 @@
 
 class Waveform;
 
-class IFilter {
+class IFilter
+{
 public:
     virtual ~IFilter() = default;
     virtual bool apply(Waveform* sound) = 0;
     virtual void failMessage() const = 0;
 };
 
-
-#endif //SOUND_PROCESSOR_IFILTER_H
+#endif  // SOUND_PROCESSOR_IFILTER_H

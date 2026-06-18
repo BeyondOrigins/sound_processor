@@ -1,6 +1,3 @@
 #include "WavBaseStream.h"
 
-void WavBaseStream::close()
-{
-    _stream.close();
-}
+void WavBaseStream::close() { _stream.close(); }

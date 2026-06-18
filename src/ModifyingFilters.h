@@ -83,16 +83,16 @@ protected:
     double _end;
 };
 
-class TimeStretchFilter : public IFilter
+class TimeStretchFilter: public IFilter
 {
-    public:
+public:
     TimeStretchFilter() = delete;
     TimeStretchFilter(const TimeStretchFilter&) = default;
     TimeStretchFilter& operator=(const TimeStretchFilter&) = default;
     TimeStretchFilter(TimeStretchFilter&&) = default;
     TimeStretchFilter& operator=(TimeStretchFilter&&) = default;
     ~TimeStretchFilter() override = default;
-    explicit TimeStretchFilter(double factor) : _factor{factor} {}
+    explicit TimeStretchFilter(double factor): _factor{factor} {}
 
 public:
     bool apply(Waveform* sound) override;
@@ -101,11 +101,12 @@ public:
     {
         std::cerr << "Could not apply TimeStretch filter" << std::endl;
     }
+
 protected:
     double _factor;
 };
 
-class LowpassFilter : public IFilter
+class LowpassFilter: public IFilter
 {
 public:
     LowpassFilter() = delete;
@@ -114,7 +115,8 @@ public:
     LowpassFilter(LowpassFilter&&) = default;
     LowpassFilter& operator=(LowpassFilter&&) = default;
     ~LowpassFilter() override = default;
-    explicit LowpassFilter(size_t windowSize) : _windowSize{windowSize} {}
+    explicit LowpassFilter(size_t windowSize): _windowSize{windowSize} {}
+
 public:
     bool apply(Waveform* sound) override;
     size_t getWindowSize() const { return _windowSize; }
@@ -122,6 +124,7 @@ public:
     {
         std::cerr << "Could not apply Lowpass filter" << std::endl;
     }
+
 protected:
     size_t _windowSize;
 };

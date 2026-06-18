@@ -14,6 +14,7 @@ public:
     WavBaseStream& operator=(const WavBaseStream&) = delete;
     WavBaseStream(WavBaseStream&&) = delete;
     WavBaseStream& operator=(WavBaseStream&&) = delete;
+
 protected:
     ~WavBaseStream() = default;
 

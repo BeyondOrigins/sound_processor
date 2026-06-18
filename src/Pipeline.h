@@ -10,15 +10,15 @@ public:
     Pipeline() = default;
     Pipeline(const Pipeline&) = delete;
     Pipeline& operator=(const Pipeline&) = delete;
-    Pipeline(Pipeline&& other) noexcept : _filters(std::move(other._filters))
+    Pipeline(Pipeline&& other) noexcept: _filters(std::move(other._filters))
     {
         other._filters.clear();
     }
     Pipeline& operator=(Pipeline&& other) noexcept
     {
-        if (this != &other)
+        if(this != &other)
         {
-            for (const IFilter* filter : _filters)
+            for(const IFilter* filter: _filters)
                 delete filter;
             _filters = std::move(other._filters);
             other._filters.clear();
@@ -27,11 +27,12 @@ public:
     }
     ~Pipeline()
     {
-        for (const IFilter* filter : _filters)
+        for(const IFilter* filter: _filters)
             delete filter;
     }
 
     bool apply(Waveform* data) const;
+
 public:
     size_t getFiltersNumber() const { return _filters.size(); }
     IFilter* operator[](size_t index) const { return _filters[index]; }
@@ -41,5 +42,4 @@ private:
     std::vector<IFilter*> _filters;
 };
 
-
-#endif //SOUND_PROCESSOR_PIPELINE_H
+#endif  // SOUND_PROCESSOR_PIPELINE_H

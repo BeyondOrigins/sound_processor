@@ -36,8 +36,6 @@ public:
         badArgs,
     };
 
-
-
     ArgsParser() = default;
 
 public:

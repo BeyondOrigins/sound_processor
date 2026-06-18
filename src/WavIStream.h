@@ -9,7 +9,6 @@ class Waveform;
 class WavIStream: public WavBaseStream
 {
 public:
-
     explicit WavIStream(const std::string& fileName)
     {
         WavIStream::open(fileName);

@@ -17,8 +17,7 @@ public:
     bool apply(Waveform* sound) override;
 
 protected:
-    virtual double
-    sampleValue(double t) const = 0;
+    virtual double sampleValue(double t) const = 0;
     virtual bool isValid() const { return _durationMs >= 0.0; }
 
     double _durationMs;

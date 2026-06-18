@@ -1,14 +1,15 @@
 #include "ModifyingFilters.h"
 #include "Waveform.h"
-#include <limits>
-#include <numeric>
 #include <algorithm>
 #include <cmath>
 #include <cstdlib>
+#include <limits>
+#include <numeric>
 
 double samplesToMilliseconds(const WavInfo& info, size_t samples)
 {
-    return round(static_cast<double>(samples) / info.fmt.dwSamplesPerSec * 1000);
+    return round(static_cast<double>(samples) / info.fmt.dwSamplesPerSec *
+                 1000);
 }
 
 size_t millisecondsToSamples(const WavInfo& info, double amount)
@@ -18,7 +19,7 @@ size_t millisecondsToSamples(const WavInfo& info, double amount)
 
 bool AmplFilter::apply(Waveform* sound)
 {
-    if(_ampl< 0 || sound->getData().empty())
+    if(_ampl < 0 || sound->getData().empty())
         return false;
     double max = std::numeric_limits<int16_t>::max();
     double min = std::numeric_limits<int16_t>::min();
@@ -56,9 +57,9 @@ bool SilenceFilter::apply(Waveform* sound)
     if(_start == _end)
         return true;
     double startMs = (_unit == "sec") ? _start * 1000.0 : _start;
-    double endMs   = (_unit == "sec") ? _end   * 1000.0 : _end;
+    double endMs = (_unit == "sec") ? _end * 1000.0 : _end;
     size_t startUnits = millisecondsToSamples(sound->getDataInfo(), startMs);
-    size_t endUnits   = millisecondsToSamples(sound->getDataInfo(), endMs);
+    size_t endUnits = millisecondsToSamples(sound->getDataInfo(), endMs);
     size_t dataSize = sound->getDataSize();
     if(startUnits > dataSize)
     {
@@ -75,19 +76,19 @@ bool SilenceFilter::apply(Waveform* sound)
 
 bool TimeStretchFilter::apply(Waveform* sound)
 {
-    if (_factor <= 0.0)
+    if(_factor <= 0.0)
         return false;
     size_t size = sound->getDataSize();
-    if (!size)
+    if(!size)
         return false;
-    size_t newDataSize = round(size*_factor);
+    size_t newDataSize = round(size * _factor);
     std::vector<int16_t>& data = sound->getData();
     std::vector<int16_t> src = sound->getData();
     data.resize(newDataSize);
-    for (size_t i = 0; i < newDataSize; ++i)
+    for(size_t i = 0; i < newDataSize; ++i)
     {
         double real = i / _factor;
-        auto pos  = static_cast<size_t>(real);
+        auto pos = static_cast<size_t>(real);
         double frac = real - pos;
         double v = src[pos] * (1.0 - frac);
         v += (pos + 1 < size ? src[pos + 1] : src[pos]) * frac;
@@ -99,18 +100,17 @@ bool TimeStretchFilter::apply(Waveform* sound)
 
 bool LowpassFilter::apply(Waveform* sound)
 {
-    if (_windowSize < 1 || _windowSize % 2 == 0 || \
-        sound->getData().empty())
+    if(_windowSize < 1 || _windowSize % 2 == 0 || sound->getData().empty())
         return false;
     size_t bias = _windowSize / 2;
     size_t size = sound->getDataSize();
     std::vector<int16_t> src = sound->getData();
     std::vector<int16_t>& data = sound->getData();
-    for (size_t i = 0; i < size; ++i)
+    for(size_t i = 0; i < size; ++i)
     {
         int32_t sum = 0;
-        for (int j = static_cast<int>(i) - static_cast<int>(bias); j <= static_cast<int>(i + bias)
-             ; ++j)
+        for(int j = static_cast<int>(i) - static_cast<int>(bias);
+            j <= static_cast<int>(i + bias); ++j)
         {
             int idx = std::clamp(j, 0, static_cast<int>(size) - 1);
             sum += src[idx];

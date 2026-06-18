@@ -4,9 +4,9 @@
 
 struct __attribute__((packed)) RiffHeader
 {
-    uint32_t chunkId;          // "RIFF"
-    uint32_t size;             // chunk data size
-    uint32_t waveId;           // "WAVE"
+    uint32_t chunkId;  // "RIFF"
+    uint32_t size;     // chunk data size
+    uint32_t waveId;   // "WAVE"
 };
 
 struct __attribute__((packed)) FmtHeader
@@ -23,15 +23,15 @@ struct __attribute__((packed)) FmtHeader
 
 struct __attribute__((packed)) DataHeader
 {
-    uint32_t chunkId;           // "data"
-    uint32_t size;              // chunk data size
+    uint32_t chunkId;  // "data"
+    uint32_t size;     // chunk data size
 };
 
 struct __attribute__((packed)) WavInfo
 {
-    RiffHeader riff;           // RIFF header
-    FmtHeader  fmt;            // FMT  header
-    DataHeader data;           // DATA header
+    RiffHeader riff;  // RIFF header
+    FmtHeader fmt;    // FMT  header
+    DataHeader data;  // DATA header
 };
 
 #endif  // SOUND_PROCESSOR_DATASTRUCTS_H
